@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block additionnalCss %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">{% endblock %}
+
+{% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">{% endblock %}
+
+{% block body %}
+    <section class="row">
+        <div class="col-12 text-center mb-3">
+            <a href="{{ path('task_create') }}" class="btn btn-info">Créer une tâche</a>
+        </div>
+        {% for task in tasks %}
+        <div class="col-sm-6 col-md-4 col-lg-3 px-2">
+            <article class="card mb-2">
+                <div class="card-body">
+                    <h4 class="float-end">
+                        {% if task.isDone %}<i class="bi bi-check-lg"></i>{% else %}<i class="bi bi-x-lg"></i>{% endif %}
+                    </h4>
+                    <h4 class="card-title"><a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a></h4>
+                    <p class="card-text">{{ task.content }}</p>
+                </div>
+                <div class="card-footer">
+                    <form action="{{ path('task_toggle', {'id' : task.id }) }}">
+                        <button class="btn btn-success btn-sm float-end">
+                            {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
+                        </button>
+                    </form>
+                    <form action="{{ path('task_delete', {'id' : task.id }) }}">
+                        <button class="btn btn-danger btn-sm float-end">Supprimer</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Il n'y a pas encore de tâche enregistrée. <a href="{{ path('task_create') }}" class="btn btn-warning float-end">Créer une tâche</a>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}
