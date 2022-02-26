@@ -17,19 +17,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private $username;
+    #[ORM\Column(type: 'string', length: '180', unique: 1)]
+    private string $username;
 
     #[ORM\Column(type: 'json')]
-    private $roles = [];
+    private array $roles = [];
 
     #[ORM\Column(type: 'string')]
-    private $password;
+    private string $password;
 
-    #[ORM\Column(type: 'string', length: 255, unique: true)]
-    private $email;
+    #[ORM\Column(type: 'string', length: '255', unique: 1)]
+    private string $email;
 
     public function getId(): ?int
     {
@@ -44,6 +44,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -99,17 +111,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
     }
 }
