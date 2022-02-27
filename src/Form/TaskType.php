@@ -22,7 +22,6 @@ class TaskType extends AbstractType
                     ],
                 ]
             )
-            //->add('author') ===> must be the user authenticated
         ;
     }
 }
