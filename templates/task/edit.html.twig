@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
-            {{ form_widget(form) }}
-
-            <button type="submit" class="btn btn-success float-end">Modifier</button>
-        {{ form_end(form) }}
+    {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
+    {{ form_widget(form) }}
+    <div class="d-flex justify-content-between">
+        <span class="h6 text-muted">
+            Auteur :
+            {% if task.author %}
+                {{ task.author.username }}
+            {% else %}
+                [Anonyme]
+            {% endif %}
+        </span>
+        <button type="submit" class="btn btn-success float-end">Modifier</button>
     </div>
+    {{ form_end(form) }}
 {% endblock %}
