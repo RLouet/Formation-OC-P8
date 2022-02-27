@@ -31,7 +31,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $task->setAuthor($this->getUser());
+            $task->setAuthor($this->getUser()); // @phan-suppress-current-line PhanTypeMismatchArgumentSuperType
             $entityManager->persist($task);
             $entityManager->flush();
 

@@ -27,7 +27,7 @@ class Task
     private bool $isDone = false;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private $author;
+    private ?User $author;
 
     public function __construct()
     {
