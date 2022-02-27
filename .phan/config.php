@@ -6,13 +6,12 @@
  * after this file is read.
  */
 return [
-
     // Supported values: `'5.6'`, `'7.0'`, `'7.1'`, `'7.2'`, `'7.3'`, `'7.4'`,
     // `'8.0'`, `'8.1'`, `null`.
     // If this is set to `null`,
     // then Phan assumes the PHP version which is closest to the minor version
     // of the php executable used to execute Phan.
-    "target_php_version" => null,
+    'target_php_version' => null,
 
     // A list of directories that should be parsed for class and
     // method information. After excluding the directories
@@ -37,8 +36,8 @@ return [
     //       party code, directories containing that code
     //       should be added to the `directory_list` as
     //       to `exclude_analysis_directory_list`.
-    "exclude_analysis_directory_list" => [
-        'vendor/'
+    'exclude_analysis_directory_list' => [
+        'vendor/',
     ],
 
     // A list of plugin files to execute.
