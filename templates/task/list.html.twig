@@ -17,7 +17,7 @@
                         {% if task.isDone %}<i class="bi bi-check-lg"></i>{% else %}<i class="bi bi-x-lg"></i>{% endif %}
                     </h4>
                     <h4 class="card-title"><a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a></h4>
-                    <p class="card-text">{{ task.content }}</p>
+                    <p class="card-text">{{ task.content|nl2br }}</p>
                 </div>
                 <div class="card-footer">
                     <form action="{{ path('task_toggle', {'id' : task.id }) }}">
