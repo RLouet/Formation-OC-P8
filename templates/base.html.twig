@@ -36,7 +36,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <a href="{# {{ path('user_create') }} #}" class="btn btn-primary">Créer un utilisateur</a>
+            <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
 
             {% if app.user %}
                 <a href="{{ path('logout') }}" class="float-end btn btn-danger">Se déconnecter</a>
