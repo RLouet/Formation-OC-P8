@@ -81,6 +81,8 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
     public function deleteTaskAction(Task $task, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('delete', $task);
+
         $entityManager->remove($task);
         $entityManager->flush();
 
