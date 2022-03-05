@@ -12,13 +12,13 @@
         <nav class="mb-2">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link{% if app.request.get('filter') == 'all'%} active{% endif %}" aria-current="page" href="{{ path('task_list') }}">Toutes</a>
+                    <a class="nav-link{% if app.request.get('filter') == 'all'%} active" aria-current="page{% endif %}" href="{{ path('task_list') }}">Toutes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if app.request.get('filter') == 'todo'%} active{% endif %}" href="{{ path('task_list', {'filter':'todo'}) }}">À faire</a>
+                    <a class="nav-link{% if app.request.get('filter') == 'todo'%} active" aria-current="page{% endif %}" href="{{ path('task_list', {'filter':'todo'}) }}">À faire</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if app.request.get('filter') == 'done'%} active{% endif %}" href="{{ path('task_list', {'filter':'done'}) }}">Terminées</a>
+                    <a class="nav-link{% if app.request.get('filter') == 'done'%} active" aria-current="page{% endif %}" href="{{ path('task_list', {'filter':'done'}) }}">Terminées</a>
                 </li>
             </ul>
         </nav>
