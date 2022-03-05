@@ -9,6 +9,19 @@
         <div class="col-12 text-center mb-3">
             <a href="{{ path('task_create') }}" class="btn btn-info">Créer une tâche</a>
         </div>
+        <nav class="mb-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link{% if app.request.get('filter') == 'all'%} active{% endif %}" aria-current="page" href="{{ path('task_list') }}">Toutes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if app.request.get('filter') == 'todo'%} active{% endif %}" href="{{ path('task_list', {'filter':'todo'}) }}">À faire</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if app.request.get('filter') == 'done'%} active{% endif %}" href="{{ path('task_list', {'filter':'done'}) }}">Terminées</a>
+                </li>
+            </ul>
+        </nav>
         {% for task in tasks %}
         <div class="col-sm-6 col-md-4 col-lg-3 px-2">
             <article class="card mb-2">
