@@ -13,12 +13,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TaskController extends AbstractController
 {
-    #[Route('/tasks', name: 'task_list')]
-    public function listAction(TaskRepository $taskRepository): Response
+    #[Route('/tasks/{filter}', name: 'task_list', requirements: ['filter' => 'done|todo'])]
+    public function listAction(TaskRepository $taskRepository, string $filter = 'all'): Response
     {
+        $tasks = match ($filter) {
+            'done' => $taskRepository->findBy(['isDone' => true]),
+            'todo' => $taskRepository->findBy(['isDone' => false]),
+            default => $taskRepository->findAll(),
+        };
+
         return $this->render(
             'task/list.html.twig',
-            ['tasks' => $taskRepository->findAll()],
+            ['tasks' => $tasks],
         );
     }
 
