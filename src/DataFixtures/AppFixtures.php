@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user
             ->setEmail('user@todolist.test')
-            ->setUsername('admin')
+            ->setUsername('user')
             ->setRoles(['ROLE_USER'])
             ->setPassword($this->hasher->hashPassword($user, 'password'))
         ;

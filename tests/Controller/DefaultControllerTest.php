@@ -18,12 +18,28 @@ final class DefaultControllerTest extends WebTestCase
         $this->client = self::createClient();
     }
 
-    public function testHomeIsUp()
+    public function testHome()
     {
         $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
+    }
 
-        echo $this->client->getResponse()->setCharset('utf-8')->getContent();
+    public function testLogin()
+    {
+        $this->client->request('GET', '/login');
+
+        $this->client->submitForm('Se connecter', [
+            '_username' => 'admin',
+            '_password' => 'password',
+        ]);
+
+        $this->assertResponseRedirects();
+        $this->client->followRedirect();
+
+        //dump($this->client->getResponse()->getContent());
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
     }
 }
