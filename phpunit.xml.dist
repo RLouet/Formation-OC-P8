@@ -18,8 +18,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Functional">
+            <directory>tests/App/Controller</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory>tests/App/Entity</directory>
         </testsuite>
     </testsuites>
 
@@ -27,6 +30,9 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <file>src/Kernel.php</file>
+        </exclude>
     </coverage>
 
     <extensions>
@@ -35,6 +41,7 @@
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="Symfony\Bridge\PhpUnit\CoverageListener"/>
     </listeners>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->

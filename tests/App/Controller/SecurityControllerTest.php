@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @internal
  * @coversNothing
  */
-final class DefaultControllerTest extends WebTestCase
+final class SecurityControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
 
@@ -18,15 +18,10 @@ final class DefaultControllerTest extends WebTestCase
         $this->client = self::createClient();
     }
 
-    public function testHome()
-    {
-        $this->client->request('GET', '/');
-
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
-    }
-
-    public function testLogin()
+    /**
+     * @covers \App\Controller\SecurityController::loginAction
+     */
+    public function testLoginAction()
     {
         $this->client->request('GET', '/login');
 
@@ -38,7 +33,6 @@ final class DefaultControllerTest extends WebTestCase
         $this->assertResponseRedirects();
         $this->client->followRedirect();
 
-        //dump($this->client->getResponse()->getContent());
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
     }
