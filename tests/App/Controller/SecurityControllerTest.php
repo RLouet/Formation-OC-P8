@@ -2,12 +2,13 @@
 
 namespace App\Tests\App\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @coversDefaultClass \App\Controller\SecurityController
  */
 final class SecurityControllerTest extends WebTestCase
 {
@@ -19,9 +20,9 @@ final class SecurityControllerTest extends WebTestCase
     }
 
     /**
-     * @covers \App\Controller\SecurityController::loginAction
+     * @covers ::loginAction
      */
-    public function testLoginAction()
+    public function testLoginValid()
     {
         $this->client->request('GET', '/login');
 
@@ -34,6 +35,47 @@ final class SecurityControllerTest extends WebTestCase
         $this->client->followRedirect();
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
+        $this->assertRouteSame('homepage');
+        $this->assertSelectorExists('a:contains("Se déconnecter")');
+    }
+
+    /**
+     * @covers ::loginAction
+     */
+    public function testLoginInvalid()
+    {
+        $this->client->request('GET', '/login');
+
+        $this->client->submitForm('Se connecter', [
+            '_username' => 'admin',
+            '_password' => 'bad',
+        ]);
+
+        $this->assertResponseRedirects();
+        $this->client->followRedirect();
+
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('login');
+        $this->assertSelectorExists('div:contains("Invalid credentials.")');
+    }
+
+    /**
+     * @covers ::logout
+     */
+    public function testLogout()
+    {
+        $userRepository = self::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(['email' => 'user@todolist.test']);
+        $this->client->loginUser($testUser);
+
+        $this->client->request('GET', '/logout');
+
+        $this->assertResponseRedirects();
+        $this->client->followRedirect();
+
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('homepage');
+        $this->assertSelectorExists('a:contains("Se connecter")');
+        $this->assertSelectorNotExists('a:contains("Se déconnecter")');
     }
 }
