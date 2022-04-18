@@ -32,6 +32,10 @@
         </include>
         <exclude>
             <file>src/Kernel.php</file>
+            <directory suffix=".php">src/DataFixtures</directory>
+            <directory suffix=".php">src/Form</directory>
+            <directory suffix=".php">src/Repository</directory>
+            <directory suffix=".php">src/Security</directory>
         </exclude>
     </coverage>
 
