@@ -2,30 +2,14 @@
 
 namespace App\Tests\App\Controller;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\App\TestCase;
 
 /**
  * @internal
  * @coversDefaultClass \App\Controller\DefaultController
  */
-final class DefaultControllerTest extends WebTestCase
+final class DefaultControllerTest extends TestCase
 {
-    private KernelBrowser $client;
-    private User $user;
-    private User $admin;
-
-    protected function setUp(): void
-    {
-        $this->client = self::createClient();
-
-        $userRepository = self::getContainer()->get(UserRepository::class);
-        $this->user = $userRepository->findOneBy(['email' => 'user@todolist.test']);
-        $this->admin = $userRepository->findOneBy(['email' => 'admin@todolist.test']);
-    }
-
     /**
      * @covers ::indexAction
      */
@@ -49,8 +33,7 @@ final class DefaultControllerTest extends WebTestCase
      */
     public function testIndexAsUser()
     {
-        $this->client->loginUser($this->user);
-
+        $this->loginAs('user');
         $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
@@ -69,8 +52,7 @@ final class DefaultControllerTest extends WebTestCase
      */
     public function testIndexAsAdmin()
     {
-        $this->client->loginUser($this->admin);
-
+        $this->loginAs('admin');
         $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();

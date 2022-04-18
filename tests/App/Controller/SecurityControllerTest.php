@@ -2,23 +2,14 @@
 
 namespace App\Tests\App\Controller;
 
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\App\TestCase;
 
 /**
  * @internal
  * @coversDefaultClass \App\Controller\SecurityController
  */
-final class SecurityControllerTest extends WebTestCase
+final class SecurityControllerTest extends TestCase
 {
-    private KernelBrowser $client;
-
-    protected function setUp(): void
-    {
-        $this->client = self::createClient();
-    }
-
     /**
      * @covers ::loginAction
      */
@@ -64,10 +55,7 @@ final class SecurityControllerTest extends WebTestCase
      */
     public function testLogout()
     {
-        $userRepository = self::getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(['email' => 'user@todolist.test']);
-        $this->client->loginUser($testUser);
-
+        $this->loginAs('user');
         $this->client->request('GET', '/logout');
 
         $this->assertResponseRedirects();
