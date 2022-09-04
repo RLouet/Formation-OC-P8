@@ -6,6 +6,7 @@ use App\Repository\TaskRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -19,9 +20,13 @@ class Task
     private DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: 'string', length: '255')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3)]
     private string $title;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3)]
     private string $content;
 
     #[ORM\Column(type: 'boolean')]

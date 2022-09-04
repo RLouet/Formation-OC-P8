@@ -52,7 +52,6 @@ class AppFixtures extends Fixture
 
         $anonymousTask = new Task();
         $anonymousTask
-            ->setAuthor($admin)
             ->setContent('This anonymous task is done.')
             ->setTitle('Anonymous DONE Task')
             ->toggle(true)

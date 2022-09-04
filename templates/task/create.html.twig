@@ -6,12 +6,7 @@
 
     <div class="d-flex justify-content-between">
         <span class="h6 text-muted">
-        Auteur :
-        {% if app.user %}
-            {{ app.user.username }}
-        {% else %}
-            [Anonyme]
-        {% endif %}
+            Auteur : {% if app.user %}{{ app.user.username }}{% else %}[Anonyme]{% endif %}
         </span>
         <button type="submit" class="btn btn-success">Ajouter</button>
     </div>
