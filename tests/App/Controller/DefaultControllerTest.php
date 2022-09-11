@@ -18,7 +18,7 @@ final class DefaultControllerTest extends TestCase
         $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
+        $this->assertSelectorTextContains('h1', 'Bienvenue sur Todo List, l\'application vous permettant de gérer l\'ensemble de vos tâches sans effort !');
         $this->assertSelectorNotExists('a:contains("Se déconnecter")');
         $this->assertSelectorExists('a:contains("Se connecter")');
         $this->assertSelectorNotExists('a:contains("Créer une nouvelle tâche")');
@@ -37,7 +37,7 @@ final class DefaultControllerTest extends TestCase
         $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
+        $this->assertSelectorTextContains('h1', 'Bienvenue sur Todo List, l\'application vous permettant de gérer l\'ensemble de vos tâches sans effort !');
         $this->assertSelectorExists('a:contains("Se déconnecter")');
         $this->assertSelectorNotExists('a:contains("Se connecter")');
         $this->assertSelectorExists('a:contains("Créer une nouvelle tâche")');
@@ -56,7 +56,7 @@ final class DefaultControllerTest extends TestCase
         $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
+        $this->assertSelectorTextContains('h1', 'Bienvenue sur Todo List, l\'application vous permettant de gérer l\'ensemble de vos tâches sans effort !');
         $this->assertSelectorExists('a:contains("Se déconnecter")');
         $this->assertSelectorNotExists('a:contains("Se connecter")');
         $this->assertSelectorExists('a:contains("Créer une nouvelle tâche")');

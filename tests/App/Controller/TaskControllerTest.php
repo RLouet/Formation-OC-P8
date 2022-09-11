@@ -141,7 +141,7 @@ final class TaskControllerTest extends TestCase
         $this->assertCount(1, $editedDiv);
         $editedDiv = $editedDiv->first();
 
-        $this->assertSame($editedDiv->filter('h6')->innerText(), "Auteur : {$user}");
+        $this->assertSame($editedDiv->filter('h6')->innerText(), "Auteur : $user");
         $this->assertSame($editedDiv->filter('p')->innerText(), "New valid task content");
         $this->assertSelectorExists('div.alert.alert-success:contains("La tâche a été bien été ajoutée.")');
     }
@@ -178,12 +178,12 @@ final class TaskControllerTest extends TestCase
     public function testEditValid(string $user, int $taskId, string $author)
     {
         $this->loginAs($user);
-        $crawler = $this->client->request('GET', "/tasks/{$taskId}/edit");
+        $crawler = $this->client->request('GET', "/tasks/$taskId/edit");
 
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('task_edit');
         $authorText = $crawler->filter('span.h6.text-muted:contains(\'Auteur :\')')->first()->innerText();
-        $this->assertSame($authorText, "Auteur : {$author}");
+        $this->assertSame($authorText, "Auteur : $author");
     }
 
     /**
@@ -193,7 +193,7 @@ final class TaskControllerTest extends TestCase
     public function testEditSubmitInvalid(string $user, int $taskId, string $input, int $errorsCount, array $errorText, string $author)
     {
         $this->loginAs($user);
-        $this->client->request('GET', "/tasks/{$taskId}/edit");
+        $this->client->request('GET', "/tasks/$taskId/edit");
         $crawler = $this->client->submitForm('Modifier', [
             'task[title]' => $input,
             'task[content]' => $input,
@@ -210,7 +210,7 @@ final class TaskControllerTest extends TestCase
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('task_edit', ['id' => $taskId]);
         $authorText = $crawler->filter('span.h6.text-muted:contains(\'Auteur :\')')->first()->innerText();
-        $this->assertSame($authorText, "Auteur : {$author}");
+        $this->assertSame($authorText, "Auteur : $author");
     }
 
     /**
@@ -220,7 +220,7 @@ final class TaskControllerTest extends TestCase
     public function testEditSubmitValid(string $user, int $taskId, string $author)
     {
         $this->loginAs($user);
-        $this->client->request('GET', "/tasks/{$taskId}/edit");
+        $this->client->request('GET', "/tasks/$taskId/edit");
         $this->client->submitForm('Modifier', [
             'task[title]' => 'Edited valid task title',
             'task[content]' => 'Edited valid task content',
@@ -231,13 +231,13 @@ final class TaskControllerTest extends TestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('task_list');
-        $editedDiv = $crawler->filter("a[href=\"/tasks/{$taskId}/edit\"]")->closest('article');
+        $editedDiv = $crawler->filter("a[href=\"/tasks/$taskId/edit\"]")->closest('article');
         $this->assertCount(1, $editedDiv);
         $editedDiv = $editedDiv->first();
 
-        $this->assertSame($editedDiv->filter('a')->innerText(), "Edited valid task title");
-        $this->assertSame($editedDiv->filter('h6')->innerText(), "Auteur : {$author}");
-        $this->assertSame($editedDiv->filter('p')->innerText(), "Edited valid task content");
+        $this->assertSame($editedDiv->filter('a')->innerText(), 'Edited valid task title');
+        $this->assertSame($editedDiv->filter('h6')->innerText(), "Auteur : $author");
+        $this->assertSame($editedDiv->filter('p')->innerText(), 'Edited valid task content');
         $this->assertSelectorExists('div.alert.alert-success:contains("La tâche a bien été modifiée.")');
     }
 
@@ -260,7 +260,7 @@ final class TaskControllerTest extends TestCase
      */
     public function testToggleTaskNotExisting()
     {
-        $this->loginAs("admin");
+        $this->loginAs('admin');
         $this->client->request('GET', '/tasks/9999999999/toggle');
 
         $this->assertResponseStatusCodeSame(404);
@@ -273,14 +273,14 @@ final class TaskControllerTest extends TestCase
     public function testToggleTaskValid(string $user, int $taskId, string $taskName, bool $done)
     {
         $this->loginAs($user);
-        $this->client->request('GET', "/tasks/{$taskId}/toggle");
+        $this->client->request('GET', "/tasks/$taskId/toggle");
 
         $this->assertResponseRedirects();
         $crawler = $this->client->followRedirect();
 
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('task_list');
-        $editedDivToggleForm = $crawler->filter("form[action=\"/tasks/{$taskId}/toggle\"]");
+        $editedDivToggleForm = $crawler->filter("form[action=\"/tasks/$taskId/toggle\"]");
         $editedDiv = $editedDivToggleForm->closest('article');
         $this->assertCount(1, $editedDiv);
         $editedDiv = $editedDiv->first();
@@ -290,11 +290,11 @@ final class TaskControllerTest extends TestCase
         if ($done) {
             $this->assertSame('bi bi-x-lg', $statusPicto->attr('class'));
             $this->assertSame('Marquer comme faite', $toggleButton->innerText());
-            $this->assertSelectorExists("div.alert.alert-success:contains(\"La tâche {$taskName} a bien été marquée comme non terminée.\")");
+            $this->assertSelectorExists("div.alert.alert-success:contains(\"La tâche $taskName a bien été marquée comme non terminée.\")");
         } else {
             $this->assertSame('bi bi-check-lg', $statusPicto->attr('class'));
             $this->assertSame('Marquer non terminée', $toggleButton->innerText());
-            $this->assertSelectorExists("div.alert.alert-success:contains(\"La tâche {$taskName} a bien été marquée comme faite.\")");
+            $this->assertSelectorExists("div.alert.alert-success:contains(\"La tâche $taskName a bien été marquée comme faite.\")");
         }
     }
 
@@ -331,7 +331,7 @@ final class TaskControllerTest extends TestCase
     public function testDeleteTaskForbidden(string $user, int $taskId)
     {
         $this->loginAs($user);
-        $this->client->request('GET', "/tasks/{$taskId}/delete");
+        $this->client->request('GET', "/tasks/$taskId/delete");
 
         $this->assertResponseStatusCodeSame(403);
     }
@@ -343,14 +343,14 @@ final class TaskControllerTest extends TestCase
     public function testDeleteTaskValid(string $user, int $taskId)
     {
         $this->loginAs($user);
-        $this->client->request('GET', "/tasks/{$taskId}/delete");
+        $this->client->request('GET', "/tasks/$taskId/delete");
 
         $this->assertResponseRedirects();
         $this->client->followRedirect();
 
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('task_list');
-        $this->assertSelectorNotExists("a[href=\"/tasks/{$taskId}/edit\"]");
+        $this->assertSelectorNotExists("a[href=\"/tasks/$taskId/edit\"]");
         $this->assertSelectorExists('div.alert.alert-success:contains("La tâche a bien été supprimée.")');
     }
 
