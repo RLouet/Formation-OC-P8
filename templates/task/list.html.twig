@@ -31,12 +31,7 @@
                     </span>
                     <h4 class="card-title"><a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a></h4>
                     <h6 class="card-subtitle mb-2 text-muted">
-                        Auteur :
-                        {% if task.author %}
-                            {{ task.author.username }}
-                        {% else %}
-                            [Anonyme]
-                        {% endif %}
+                        Auteur : {% if task.author %}{{ task.author.username }}{% else %}[Anonyme]{% endif %}
                     </h6>
                     <p class="card-text">{{ task.content|nl2br }}</p>
                 </div>

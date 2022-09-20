@@ -18,8 +18,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Functional">
+            <directory>tests/App/Controller</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory>tests/App/Entity</directory>
         </testsuite>
     </testsuites>
 
@@ -27,11 +30,18 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <file>src/Kernel.php</file>
+            <directory suffix=".php">src/DataFixtures</directory>
+            <directory suffix=".php">src/Form</directory>
+            <directory suffix=".php">src/Repository</directory>
+            <directory suffix=".php">src/Security</directory>
+        </exclude>
     </coverage>
 
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->
     <!--
