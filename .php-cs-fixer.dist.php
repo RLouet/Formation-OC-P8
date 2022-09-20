@@ -13,7 +13,7 @@ return (new PhpCsFixer\Config())
         '@PhpCsFixer' => true,
         '@PhpCsFixer:risky' => true,
         '@DoctrineAnnotation' => true,
-        'single_quote' => ['strings_containing_single_quote_chars' => false],
+        'single_quote' => ['strings_containing_single_quote_chars' => true],
     ])
     ->setFinder($finder)
 ;
