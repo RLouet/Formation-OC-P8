@@ -20,7 +20,8 @@ final class UserTest extends WebTestCase
 
     public function testId(): void
     {
-        $this->assertSame(null, $this->user->getId());
+        $this->expectError();
+        $this->user->getId();
     }
 
     public function tesDefaultRoles(): void
