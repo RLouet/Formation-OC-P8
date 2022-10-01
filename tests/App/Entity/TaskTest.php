@@ -21,7 +21,8 @@ final class TaskTest extends WebTestCase
 
     public function testId(): void
     {
-        $this->assertSame(null, $this->task->getId());
+        $this->expectError();
+        $this->task->getId();
     }
 
     public function testCreatedAt(): void
