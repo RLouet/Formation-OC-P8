@@ -177,7 +177,7 @@ final class UserControllerTest extends TestCase
      * @covers ::editAction
      * @dataProvider editSubmitValidProvider
      */
-    public function testEditSubmitValid(int $userId, string $role)
+    public function testEditSubmitValid(int $userId)
     {
         $this->loginAs('admin');
         $this->client->request('GET', "/users/$userId/edit");
@@ -430,15 +430,9 @@ final class UserControllerTest extends TestCase
 
     public function editSubmitValidProvider(): \Generator
     {
-        yield 'user' => [
-            2,
-            'ROLE_ADMIN',
-        ];
+        yield 'user' => [2];
 
-        yield 'admin' => [
-            1,
-            'ROLE_USER',
-        ];
+        yield 'admin' => [1];
 
     }
 }
