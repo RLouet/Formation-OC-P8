@@ -15,10 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private int $id;
+    use EntityIdManagementTrait;
 
     #[ORM\Column(type: 'string', length: '180', unique: 1)]
     #[Assert\NotBlank]
@@ -37,11 +34,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     #[Assert\Email]
     private string $email;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getUsername(): ?string
     {
