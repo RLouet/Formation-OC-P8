@@ -57,7 +57,7 @@ Par défaut, les comptes sont les suivants :
 >
 > Mot de passe : password
 
-**Ces comptes sont destinés à une utilisation en local (les adresses email ne sont pas valides et le mot de passe non conforme à une utilisation en production)**
+**Ces comptes sont destinés à une utilisation en local (les adresses email ne sont pas valides et le mot de passe non conforme à une utilisation en production), pensez à les supprimer ou modifier pour une utilisation en production.**
 
 ##### Utilisation en local
 *Prérequis : symfony, php et un SGBD installés*

@@ -22,15 +22,15 @@ class TaskVoter extends Voter
             && $subject instanceof Task;
     }
 
-    protected function voteOnAttribute(string $attribute, $task, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        /** @var Task $task */
+        /** @var Task $subject */
         $user = $token->getUser();
 
         if (!$user instanceof UserInterface) {
             return false;
         }
 
-        return $task->getAuthor() ? $user === $task->getAuthor() : $this->security->isGranted('ROLE_ADMIN');
+        return $subject->getAuthor() ? $user === $subject->getAuthor() : $this->security->isGranted('ROLE_ADMIN');
     }
 }

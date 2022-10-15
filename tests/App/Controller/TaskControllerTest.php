@@ -291,11 +291,12 @@ final class TaskControllerTest extends TestCase
             $this->assertSame('bi bi-x-lg', $statusPicto->attr('class'));
             $this->assertSame('Marquer comme faite', $toggleButton->innerText());
             $this->assertSelectorExists("div.alert.alert-success:contains(\"La tâche $taskName a bien été marquée comme non terminée.\")");
-        } else {
-            $this->assertSame('bi bi-check-lg', $statusPicto->attr('class'));
-            $this->assertSame('Marquer non terminée', $toggleButton->innerText());
-            $this->assertSelectorExists("div.alert.alert-success:contains(\"La tâche $taskName a bien été marquée comme faite.\")");
+            return;
         }
+
+        $this->assertSame('bi bi-check-lg', $statusPicto->attr('class'));
+        $this->assertSame('Marquer non terminée', $toggleButton->innerText());
+        $this->assertSelectorExists("div.alert.alert-success:contains(\"La tâche $taskName a bien été marquée comme faite.\")");
     }
 
     /**
